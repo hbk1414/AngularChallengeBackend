@@ -1,5 +1,7 @@
 package com.harres.AngularChallengeBackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -31,12 +33,29 @@ public class Activity {
         this.id = id;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "contact_id")
     private Contact contact;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "contact_id")
+    @JsonIgnore
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "activity_type_id")
+    public ActivityType getActivityType() {
+        return activityType;
+    }
+
+    public void setActivityType(ActivityType activityType) {
+        this.activityType = activityType;
+    }
+
     private ActivityType activityType;
 
     @Column(name = "title", nullable = false)

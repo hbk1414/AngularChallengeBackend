@@ -1,5 +1,7 @@
 package com.harres.AngularChallengeBackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,14 +10,14 @@ import java.util.List;
 public class ActivityType {
 
     private long id;
-    private String activityType;
+    private String type;
 
     public ActivityType() {
 
     }
 
-    public ActivityType(String activityType) {
-        this.activityType = activityType;
+    public ActivityType(String type) {
+        this.type = type;
     }
 
     @Id
@@ -27,16 +29,24 @@ public class ActivityType {
         this.id = id;
     }
 
-    @OneToMany(mappedBy ="activityType")
     private List<Activity> activities;
 
-    @Column(name = "activity_type", nullable = false)
-    public String getActivityType() {
-        return activityType;
+    @Column(name = "type", nullable = false)
+    public String getType() {
+        return type;
     }
-    public void setActivityType(String activityType) {
-        this.activityType = activityType;
+    public void setType(String type) {
+        this.type = type;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "activity_type_id")
+    @JsonIgnore
+    public List<Activity> getActivities() {
+        return activities;
+    }
 
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
+    }
 }

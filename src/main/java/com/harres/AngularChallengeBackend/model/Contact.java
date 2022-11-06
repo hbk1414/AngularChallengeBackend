@@ -39,8 +39,7 @@ public class Contact {
         this.id = id;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="id")
+
     private List<Activity> activities;
 
 
@@ -89,6 +88,21 @@ public class Contact {
         return city;
     }
 
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", address1='" + address1 + '\'' +
+                ", address2='" + address2 + '\'' +
+                ", city='" + city + '\'' +
+                ", postCode='" + postCode + '\'' +
+                ", activities=" + activities +
+                '}';
+    }
+
     public void setCity(String city) {
         this.city = city;
     }
@@ -97,13 +111,15 @@ public class Contact {
         return postCode;
     }
 
-//    public List<Activity> getActivities() {
-//        return activities;
-//    }
-//
-//    public void setActivities(List<Activity> activities) {
-//        this.activities = activities;
-//    }
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "contact_id")
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
+    }
 
     public void setPostCode(String postCode) {
         this.postCode = postCode;
