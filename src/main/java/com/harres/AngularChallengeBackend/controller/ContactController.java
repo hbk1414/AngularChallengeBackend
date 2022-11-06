@@ -65,6 +65,12 @@ public class ContactController {
         contact.setEmailAddress(contactDetails.getEmailAddress());
         contact.setLastName(contactDetails.getLastName());
         contact.setFirstName(contactDetails.getFirstName());
+        contact.setAddress1(contactDetails.getAddress1());
+        contact.setAddress2(contactDetails.getAddress2());
+        contact.setCity(contactDetails.getCity());
+        contact.setPostCode(contactDetails.getPostCode());
+        contact.setActivities(contactDetails.getActivities());
+
         final Contact updatedContact = contactRepository.save(contact);
         return ResponseEntity.ok(updatedContact);
     }
