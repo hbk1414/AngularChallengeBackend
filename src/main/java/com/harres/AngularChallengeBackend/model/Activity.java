@@ -1,6 +1,10 @@
 package com.harres.AngularChallengeBackend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 import javax.persistence.*;
 
@@ -14,7 +18,6 @@ public class Activity {
     private String dueDate;
 
     public Activity() {
-
     }
 
     public Activity(Contact contact, String title, String notes, String dueDate) {
@@ -35,9 +38,8 @@ public class Activity {
 
     private Contact contact;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true, cascade = CascadeType.DETACH)
     @JoinColumn(name = "contact_id")
-    @JsonIgnore
     public Contact getContact() {
         return contact;
     }
